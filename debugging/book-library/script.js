@@ -1,6 +1,6 @@
 let myLibrary = [];
 
-window.addEventListener("load", function (e) {
+window.addEventListener("load", function() {
   populateStorage();
   render();
 });
@@ -29,12 +29,10 @@ const check = document.getElementById("check");
 //via Book function and start render function
 function submit() {
   if (
-    title.value == null ||
-    title.value == "" ||
-    author.value == null ||
-    author.value == "" ||
-    pages.value == null ||
-    pages.value == ""
+    title.value === "" ||
+    author.value === "" ||
+    pages.value === "" ||
+    !check.checked //if the checkbox is not checked, it will be false, so we need to check if its not checked
   ) {
     alert("Please fill all fields!");
     return false;
@@ -45,11 +43,13 @@ function submit() {
   }
 }
 
-function Book(title, author, pages, check) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.check = check;
+class Book {
+  constructor(title, author, pages, check) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.check = check;
+  }
 }
 
 function render() {
@@ -78,7 +78,7 @@ function render() {
     changeBut.className = "btn btn-success";
     wasReadCell.appendChild(changeBut);
     let readStatus = "";
-    if (myLibrary[i].check == true) {
+    if (myLibrary[i].check) {
       readStatus = "Yes";
     } else {
       readStatus = "No";
@@ -92,7 +92,7 @@ function render() {
 
     //add delete button to every row and render again
     let delButton = document.createElement("button");
-    delButton.id = i + 5;
+    delButton.id = i;
     deleteCell.appendChild(delButton);
     delButton.className = "btn btn-warning";
     delButton.innerHTML = "Delete";
